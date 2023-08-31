@@ -13,6 +13,7 @@
         "no-console": "off",
         "no-duplicate-imports": "off",
         "no-underscore-dangle": "off",
-        "consistent-return": "off"
-    }
+        "consistent-return": "off",
+        "max-len": "off",
+        "object-curly-newline": "off"
 }

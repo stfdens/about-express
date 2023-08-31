@@ -1,16 +1,38 @@
 /* eslint-disable no-useless-catch */
 const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
 
 class AccountService {
   constructor() {
     this._pool = new Pool();
   }
 
-  async addAccount({ username, email, password }) {
+  async duplikatUser(username) {
     try {
       const query = {
+        text: 'SELECT username FROM account WHERE username = $1',
+        values: [username],
+      };
+
+      const result = await this._pool.query(query);
+
+      if (result.rows.length > 0) {
+        console.log('data sudah ada');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async addAccount({ username, email, password }) {
+    try {
+      await this.duplikatUser(username);
+
+      const hashPassword = await bcrypt.hash(password, 10);
+
+      const query = {
         text: 'INSERT INTO account(username, email, password) VALUES ($1, $2, $3)',
-        values: [username, email, password],
+        values: [username, email, hashPassword],
       };
 
       await this._pool.query(query);
@@ -44,12 +66,17 @@ class AccountService {
 
   async updateAccountById({ id }, { username, email, password }) {
     try {
+      const hashPassword = await bcrypt.hash(password, 10);
+
       const query = {
         text: 'UPDATE account SET username = $1, email = $2, password = $3 WHERE id = $4',
-        values: [username, email, password, id],
+        values: [username, email, hashPassword, id],
       };
 
-      await this._pool.query(query);
+      const result = await this._pool.query(query);
+      if (result.rowCount === 0) {
+        return { success: false, message: 'not found' };
+      }
     } catch (error) {
       console.log(error);
     }
@@ -69,4 +96,4 @@ class AccountService {
   }
 }
 
-module.exports = AccountService;
+module.exports = new AccountService();

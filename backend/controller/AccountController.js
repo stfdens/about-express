@@ -1,9 +1,9 @@
-const AccountService = require('../service/AccountService');
+const accountService = require('../service/AccountService');
 
 class AccountController {
   static async addData(req, res) {
     try {
-      const accountService = new AccountService();
+      await accountService.duplikatUser(req.body);
       await accountService.addAccount(req.body);
       res.status(200).json({
         message: 'Account added successfully.',
@@ -18,7 +18,6 @@ class AccountController {
 
   static async getData(req, res) {
     try {
-      const accountService = new AccountService();
       const accounts = await accountService.getAccounts();
       res.status(200).json(accounts);
     } catch (error) {
@@ -31,7 +30,6 @@ class AccountController {
 
   static async getDataById(req, res) {
     try {
-      const accountService = new AccountService();
       const acc = await accountService.getAccountsById(req.params);
       return res.status(200).json({
         data: acc,
@@ -43,7 +41,6 @@ class AccountController {
 
   static async updateDataById(req, res) {
     try {
-      const accountService = new AccountService();
       await accountService.updateAccountById(req.params, req.body);
       return res.status(200).json({
         message: 'success',
@@ -55,7 +52,6 @@ class AccountController {
 
   static async deleteDataById(req, res) {
     try {
-      const accountService = new AccountService();
       await accountService.deleteAccountById(req.params);
       return res.status(200).json({
         message: 'data berhasil dihapus',
