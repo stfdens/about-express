@@ -1,20 +1,17 @@
+const jwt = require('jsonwebtoken');
 const authService = require('../service/AuthService');
-const jwt = require('jsonwebtoken')
 
 class AuthController {
   static async login(req, res) {
     try {
+      const date = 86400;
       const data = await authService.login(req.body);
 
-      const token = jwt.sign({ _id: data.id }, 'secret_key')
-      res.status(200).json({
-        refreshToken: token,
-      })
-
       if (data) {
+        const token = jwt.sign({ _id: data.id }, 'secret_key', { expiresIn: date });
         res.status(200).json({
           message: 'berhasil login',
-          token: token,
+          refreshToken: token,
         });
       } else {
         res.status(400).json({
@@ -22,10 +19,10 @@ class AuthController {
         });
       }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: 'maaf terjadi kesalahan pada server kami',
-        })
+      console.error(error);
+      res.status(500).json({
+        message: 'maaf terjadi kesalahan pada server kami',
+      });
     }
   }
 }

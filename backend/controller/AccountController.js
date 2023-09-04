@@ -3,10 +3,9 @@ const accountService = require('../service/AccountService');
 class AccountController {
   static async addData(req, res) {
     try {
-      await accountService.duplikatUser(req.body);
-      await accountService.addAccount(req.body);
+      const data = await accountService.addAccount(req.body);
       res.status(200).json({
-        message: 'Account added successfully.',
+        message: data,
       });
     } catch (error) {
       console.log(error);

@@ -17,25 +17,31 @@ class AccountService {
       const result = await this._pool.query(query);
 
       if (result.rows.length > 0) {
-        console.log('data sudah ada');
+        return true;
       }
+
+      return false;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   async addAccount({ username, email, password }) {
     try {
-      await this.duplikatUser(username);
+      const data = await this.duplikatUser(username);
+      if (!data) {
+        const hashPassword = await bcrypt.hash(password, 10);
 
-      const hashPassword = await bcrypt.hash(password, 10);
+        const query = {
+          text: 'INSERT INTO account(username, email, password) VALUES ($1, $2, $3)',
+          values: [username, email, hashPassword],
+        };
 
-      const query = {
-        text: 'INSERT INTO account(username, email, password) VALUES ($1, $2, $3)',
-        values: [username, email, hashPassword],
-      };
+        await this._pool.query(query);
+        return 'data berhasil ditambahkan';
+      }
 
-      await this._pool.query(query);
+      return 'username telah digunakan';
     } catch (error) {
       console.error(error.message);
     }

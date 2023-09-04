@@ -15,5 +15,7 @@
         "no-underscore-dangle": "off",
         "consistent-return": "off",
         "max-len": "off",
-        "object-curly-newline": "off"
-}
+        "object-curly-newline": "off",
+        "no-unused-expressions": "off",
+        "no-sequences": "off"
+}}
