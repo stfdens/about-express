@@ -1,13 +1,17 @@
 const MapDbToModelAccount = ({
-  id,
-  username,
-  email,
-  passowrd,
+  nama,
+  kelas,
+  jurusan,
+  praktek,
+  harian,
+  ulangan,
 }) => ({
-  id,
-  username,
-  email,
-  passowrd,
+  nama,
+  kelas,
+  jurusan,
+  praktek,
+  harian,
+  ulangan,
 });
 
 module.exports = MapDbToModelAccount;

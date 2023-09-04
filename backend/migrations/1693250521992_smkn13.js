@@ -46,10 +46,29 @@ exports.up = (pgm) => {
       type: 'integer',
       notNull: true,
     },
+  }),
+  pgm.createTable('nilai', {
+    nama: {
+      type: 'varchar',
+      notNull: true,
+    },
+    praktek: {
+      type: 'integer',
+      notNull: true,
+    },
+    harian: {
+      type: 'integer',
+      notNull: true,
+    },
+    ulangan: {
+      type: 'integer',
+      notNull: true,
+    },
   });
 };
 
 exports.down = (pgm) => {
   pgm.dropTable('account');
   pgm.dropTable('murid');
+  pgm.dropTable('nilai');
 };

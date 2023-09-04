@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const MapDbToModelAccount = require('../utils/MapDbToModelAccount');
 
 class MuridService {
   constructor() {
@@ -44,6 +45,25 @@ class MuridService {
       return data.rows;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async getMuridAndNilaiS({ nama }) {
+    try {
+      const query = {
+        text: 'SELECT * FROM murid JOIN nilai ON murid.nama = nilai.nama WHERE murid.nama = $1',
+        values: [nama],
+      };
+
+      const data = await this._pool.query(query);
+
+      if (data.rowCount === 0) {
+        return 'data tidak ada';
+      }
+
+      return data.rows.map(MapDbToModelAccount);
+    } catch (error) {
+      console.log(error);
     }
   }
 

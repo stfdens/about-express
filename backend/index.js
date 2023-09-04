@@ -5,6 +5,7 @@ require('dotenv').config();
 const AccountRoute = require('./routes/AccountRoute');
 const AuthRoute = require('./routes/AuthRoute');
 const MuridRoute = require('./routes/MuridRoute');
+const NilaiRoute = require('./routes/NilaiRoute');
 
 // database
 const client = require('./models/Connections');
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(AccountRoute);
 app.use(AuthRoute);
 app.use(MuridRoute);
+app.use(NilaiRoute);
 
 app.listen(port, () => {
   console.log(`this backend runing on http://localhost:${port}`);

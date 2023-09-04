@@ -54,6 +54,17 @@ class MuridController {
     }
   }
 
+  static async getDataAndNilai(req, res) {
+    try {
+      const data = await muridService.getMuridAndNilaiS(req.params);
+      res.status(200).json({
+        data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   static async updateMuridByName(req, res) {
     try {
       const { error } = await updateData.validate(req.body);

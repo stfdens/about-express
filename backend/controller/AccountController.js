@@ -1,11 +1,18 @@
 const accountService = require('../service/AccountService');
+const addAccount = require('../validations/AccountValidation');
 
 class AccountController {
   static async addData(req, res) {
     try {
-      const data = await accountService.addAccount(req.body);
-      res.status(200).json({
-        message: data,
+      const { error } = await addAccount.validate(req.body);
+      if (!error) {
+        const data = await accountService.addAccount(req.body);
+        res.status(200).json({
+          message: data,
+        });
+      }
+      res.status(400).json({
+        message: error.message,
       });
     } catch (error) {
       console.log(error);

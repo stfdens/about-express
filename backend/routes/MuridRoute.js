@@ -8,6 +8,7 @@ app.use(authenticateJwt);
 app.post('/murid', MuridController.addData);
 app.get('/murid', MuridController.getData);
 app.get('/murid/:nama', MuridController.getDataByNama);
+app.get('/murid/nilai/:nama', MuridController.getDataAndNilai);
 app.put('/murid/:id', MuridController.updateMuridByName);
 app.delete('/murid/:id', MuridController.deleteMuridById);
 
