@@ -8,7 +8,7 @@ class AuthController {
       const data = await authService.login(req.body);
 
       if (data) {
-        const token = jwt.sign({ _id: data.id }, 'secret_key', { expiresIn: date });
+        const token = jwt.sign({ _id: data.id, role: data.role }, 'BEBAS_ANJING', { expiresIn: date });
         res.status(200).json({
           message: 'berhasil login',
           refreshToken: token,

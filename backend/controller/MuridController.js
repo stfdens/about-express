@@ -8,7 +8,7 @@ class MuridController {
       const { error } = postdata.validate(req.body);
       if (!error) {
         const data = await muridService.AddMurid(req.body);
-        if (data) {
+        if (!data) {
           res.status(400).json({ message: data });
         } else {
           res.status(200).json({ message: data });
@@ -28,14 +28,14 @@ class MuridController {
 
   static async getData(req, res) {
     try {
-      const datas = await muridService.getMurid();
+      const data = await muridService.getMurid();
       res.status(200).json({
-        data: datas,
+        data,
       });
     } catch (error) {
       console.error(error);
       res.status(500).json({
-        message: 'Maaf terjadi kesalahan pada server kami',
+        message: 'Terjadi kesalahan saat mengambil data murid',
       });
     }
   }

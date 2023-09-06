@@ -26,15 +26,15 @@ class AccountService {
     }
   }
 
-  async addAccount({ username, email, password }) {
+  async addAccount({ username, email, password, role = 'student' }) {
     try {
       const data = await this.duplikatUser(username);
       if (!data) {
         const hashPassword = await bcrypt.hash(password, 10);
 
         const query = {
-          text: 'INSERT INTO account(username, email, password) VALUES ($1, $2, $3)',
-          values: [username, email, hashPassword],
+          text: 'INSERT INTO account(username, email, password, role) VALUES ($1, $2, $3, $4)',
+          values: [username, email, hashPassword, role],
         };
 
         await this._pool.query(query);

@@ -16,14 +16,14 @@ class AuthService {
       const result = await this._pool.query(query);
 
       if (result.rows.length > 0) {
-        const AmbilHashDariDb = result.rows[0].password;
-        const isPasswordCorrect = await bcrypt.compare(password, AmbilHashDariDb);
+        const user = result.rows[0];
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
         if (isPasswordCorrect) {
-          return isPasswordCorrect;
+          return user;
         }
-        return false;
       }
+
       return false;
     } catch (error) {
       return (error);

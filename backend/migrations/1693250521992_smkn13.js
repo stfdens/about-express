@@ -20,6 +20,10 @@ exports.up = (pgm) => {
       type: 'varchar',
       notNull: true,
     },
+    role: {
+      type: 'varchar',
+      notNull: true,
+    },
   }),
   pgm.createTable('murid', {
     id: {

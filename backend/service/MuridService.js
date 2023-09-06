@@ -28,7 +28,7 @@ class MuridService {
         values: [nama, jurusan, kelas, nis, nisn],
       };
       await this._pool.query(query);
-      return 'Data berhasil ditambahkan';
+      return 'data berhasil ditambahkan';
     } catch (error) {
       console.error(error);
       throw error;
